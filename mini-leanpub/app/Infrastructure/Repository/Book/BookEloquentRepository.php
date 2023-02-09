@@ -12,4 +12,9 @@ class BookEloquentRepository implements BookRepositoryInterface
     {
         return $this->model->create($data);
     }
+
+    public function find($bookCode)
+    {
+        return $this->model->whereBookCode($bookCode)->first();
+    }
 }

@@ -43,6 +43,11 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
+        'books' => [
+            'driver' => 'local',
+            'root' => storage_path('app/books'),
+            'throw' => false,
+        ],
 
         's3' => [
             'driver' => 's3',
