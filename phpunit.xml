@@ -11,8 +11,11 @@
         <testsuite name="Feature">
             <directory suffix="Test.php">./tests/Feature</directory>
         </testsuite>
-         <testsuite name="MiniLeanpub">
-            <directory suffix="Test.php">./mini-leanpub/tests</directory>
+         <testsuite name="MiniLeanpubUnit">
+            <directory suffix="Test.php">./mini-leanpub/tests/Unit</directory>
+        </testsuite>
+        <testsuite name="MiniLeanpubIntegration">
+            <directory suffix="Test.php">./mini-leanpub/tests/Integration</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
