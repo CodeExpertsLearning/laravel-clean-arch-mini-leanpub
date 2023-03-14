@@ -13,19 +13,18 @@ class ConvertBookToPDFUseCase
         private ConvertBookToPDFInputDTO $input,
         private BookRepositoryInterface $repository,
         private QueueInterface $queue
-    )
-    {
+    ) {
     }
 
     public function handle(): ConvertBookToPDFOutputDTO
     {
         $book = $this->repository->find($this->input->getData()['bookCode']);
 
-        $this->queue->sendToQueue($book->book_code); 
+        $this->queue->sendToQueue($book->book_code);
 
         //storage/app/books/uuid-v4/chapters/*md
-                                  // /book.pdf
+        // /book.pdf
 
-        return new ConvertBookToPDFOutputDTO($book->book_code);
+        return new ConvertBookToPDFOutputDTO(bookCode: $book->book_code);
     }
 }
