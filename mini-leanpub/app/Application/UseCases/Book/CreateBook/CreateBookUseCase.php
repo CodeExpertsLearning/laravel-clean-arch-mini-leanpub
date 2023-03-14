@@ -30,6 +30,10 @@ class CreateBookUseCase
 
         $result = $this->repository->create($data);
 
-        return new BookCreateOutputDTO($result->bookCode, $result->title);
+        return new BookCreateOutputDTO(
+            bookCode: $result->book_code,
+            title: $result->title,
+            price: $result->price
+        );
     }
 }

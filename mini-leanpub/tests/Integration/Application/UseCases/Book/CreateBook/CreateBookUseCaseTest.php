@@ -25,5 +25,12 @@ class CreateBookUseCaseTest extends LaravelTestCase
 
         $useCase = new CreateBookUseCase($input, $repository);
         $result = $useCase->handle();
+
+        $inputData = $input->getData();
+        $outputData = $result->getData();
+
+        $this->assertEquals($inputData['bookCode'], $outputData['bookCode']);
+        $this->assertEquals($inputData['title'], $outputData['title']);
+        $this->assertEquals($inputData['price'], $outputData['price']);
     }
 }
