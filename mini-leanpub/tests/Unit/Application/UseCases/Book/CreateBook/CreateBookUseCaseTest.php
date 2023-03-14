@@ -14,12 +14,14 @@ class CreateBookUseCaseTest extends TestCase
     {
         $repository = $this->getRepositoryMock();
 
-        $input = new BookCreateInputDTO('00f727b3-84d7-41cd-883e-de1ee634b95a', 
-                'My Awesome Book', 
-                'My Awesome Book Desc', 
-                25.9, 
-                'book_path', 
-                'text/markdown');
+        $input = new BookCreateInputDTO(
+            '00f727b3-84d7-41cd-883e-de1ee634b95a',
+            'My Awesome Book',
+            'My Awesome Book Desc',
+            25.9,
+            'book_path',
+            'text/markdown'
+        );
 
         $useCase = new CreateBookUseCase($input, $repository);
         $result = $useCase->handle();
@@ -28,14 +30,14 @@ class CreateBookUseCaseTest extends TestCase
 
         $data = $result->getData();
 
-        $this->assertEquals('00f727b3-84d7-41cd-883e-de1ee634b95a', $data['id']);
+        $this->assertEquals('00f727b3-84d7-41cd-883e-de1ee634b95a', $data['bookCode']);
         $this->assertEquals('My Awesome Book', $data['title']);
     }
 
     private function getRepositoryMock()
     {
         $return = new \stdClass();
-        $return->id = '00f727b3-84d7-41cd-883e-de1ee634b95a';
+        $return->bookCode = '00f727b3-84d7-41cd-883e-de1ee634b95a';
         $return->title = 'My Awesome Book';
         $return->description = 'My Awesome Book Desc';
         $return->price = 25.9;
@@ -44,9 +46,9 @@ class CreateBookUseCaseTest extends TestCase
         $model = $this->createMock(Book::class); //Eloquent Book Model...
 
         $mock = $this->getMockBuilder(BookEloquentRepository::class)
-                    ->onlyMethods(['create'])
-                    ->setConstructorArgs([$model])
-                    ->getMock();
+            ->onlyMethods(['create'])
+            ->setConstructorArgs([$model])
+            ->getMock();
 
         $mock->expects($this->once())
             ->method('create')
