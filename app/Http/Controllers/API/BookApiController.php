@@ -11,6 +11,7 @@ use MiniLeanpub\Infrastructure\Repository\Book\BookEloquentRepository;
 use Illuminate\Support\Str;
 use MiniLeanpub\Application\UseCases\Book\ConvertBookToPDF\ConvertBookToPDFUseCase;
 use MiniLeanpub\Application\UseCases\Book\ConvertBookToPDF\DTO\ConvertBookToPDFInputDTO;
+use MiniLeanpub\Infrastructure\Presenter\Book\BookApiMessagePresenter;
 use MiniLeanpub\Infrastructure\Queue\Book\BookConverterQueueSender;
 
 class BookApiController extends Controller
@@ -33,11 +34,8 @@ class BookApiController extends Controller
         $useCase = new CreateBookUseCase($input, $repository);
         $result = ($useCase->handle())->getData();
 
-        return response()->json([
-            'data' => [
-                'message' => "Book {$result['title']} has been created successfully"
-            ]
-        ]);
+        $presenter = new BookApiMessagePresenter("Book {$result['title']} has been created successfully");
+        return response($presenter->getResponse());
     }
 
     public function convertBook($bookCode)
@@ -49,10 +47,7 @@ class BookApiController extends Controller
         $useCase = new ConvertBookToPDFUseCase($input, $repository, $queueSender);
         $result = $useCase->handle();
 
-        return response()->json([
-            'data' => [
-                'message' => "Book has been sended to conversion successfully"
-            ]
-        ]);
+        $presenter = new BookApiMessagePresenter("Book has been sended to conversion successfully");
+        return response($presenter->getResponse());
     }
 }
